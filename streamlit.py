@@ -26,14 +26,18 @@ n_empty_sites = sites - n_occ_sites
 expected_n_false_positives_per_empty_site = clips * (1 - precision)
 chance_of_fp_at_site = 1 - precision**clips
 expected_n_sites_with_false_positive = np.round(chance_of_fp_at_site * n_empty_sites)
-
+n_clips_with_positive = int(clips * availability)  # n clips with cue at occupied site
+# chance of no true positive and no false positive at occupied site
+no_tp_occ = (1 - recall) ** n_clips_with_positive
+no_fp_occ = (precision) ** (clips - n_clips_with_positive)
+expected_n_occ_sites_with_positive = int(n_occ_sites * (1 - no_tp_occ * no_fp_occ))
 
 # site recall is 1- (chance of never detecting it on any of the clips)
 site_level_recall = 1 - (1 - recall) ** int(clips * availability)
 
 # effects of both fp and fn on naive occupancy at site level
 expected_naive_occupancy_w_fp = (
-    n_occ_sites * site_level_recall + expected_n_sites_with_false_positive
+    expected_n_occ_sites_with_positive + expected_n_sites_with_false_positive
 ) / sites
 
 # outputs
