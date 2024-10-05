@@ -5,10 +5,10 @@ st.write(f"## Effect of ML precision & recall on naiive occupancy")
 
 # inputs
 precision = st.number_input(
-    "Classifier precision (one clip)", value=0.99, step=0.0001, format="%0.4f"
+    "Classifier precision (one clip)", value=0.99, step=0.000001, format="%0.7f"
 )
 recall = st.number_input(
-    "Classifier recall (one clip)", value=0.5, step=0.0001, format="%0.4f"
+    "Classifier recall (one clip)", value=0.5, step=0.000001, format="%0.7f"
 )
 availability = st.number_input(
     "Availability (fraction of clips at occupied site with detectable cue)",
